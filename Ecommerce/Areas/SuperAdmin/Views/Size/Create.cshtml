@@ -1,0 +1,26 @@
+﻿@using Ecommerce.BLL.DTOs.Color
+@model CreateSizeDto
+<div class="content-wrapper">
+    ----------------------
+    
+    <div class="row">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Add Size</h4>
+                    <form method="post" class="forms-sample">
+                        <div class="form-group">
+                            
+                            <input asp-for="SizeProduct" class="form-control" placeholder="size name">
+                            <span asp-validation-for="SizeProduct"></span>
+                            
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <a asp-controller="Size" asp-action="Index" class="btn btn-light">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

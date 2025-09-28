@@ -1,0 +1,91 @@
+﻿@using Ecommerce.MVC.Areas.SuperAdmin.Models.Product
+@model ProductViewModel
+
+
+<div class="content-wrapper">
+    ----------------------
+    <div class="row">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body" style="border:1px solid #ccc;">
+                    <h4 class="card-title">Add Product</h4>
+                    <form method="post" class="forms-sample" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input asp-for="Name" class="form-control" style="border:1px solid #ccc;" placeholder="product name">
+                            <span asp-validation-for="Name"></span>
+                            <br>
+                            <label>Image File</label>
+                            <input asp-for="ImageFile" type="file" class="form-control" />
+                            <span asp-validation-for="ImageFile"></span>
+                            <br>
+                            <label>Price</label>
+                            <input asp-for="Price" class="form-control" style="border:1px solid #ccc;" placeholder="Price">
+                            <span asp-validation-for="Price"></span>
+                            <br>
+                            <input asp-for="Description" class="form-control" style="border:1px solid #ccc;" placeholder="Description">
+                            <span asp-validation-for="Description"></span>
+                            <br>
+                            @* <label>Discount Percent</label>
+                            <input asp-for="DiscountPercent" class="form-control" style="border:1px solid #ccc;" placeholder="DiscountPercent">
+                            <span asp-validation-for="DiscountPercent"></span>
+                            <br> *@
+                            <label>Brand</label>
+                            <select asp-for="BrandId" asp-items="Model.ListBrand" class="form-control" style="border:1px solid #ccc;">
+                                <option value="">-- Brand seçin --</option>
+                            </select>
+                            <span asp-validation-for="BrandId"></span>
+                            <br>
+                            <label>Category</label>
+                            <select asp-for="CategoryId" asp-items="Model.ListCategory" class="form-control" style="border:1px solid #ccc;">
+                                <option value="">-- Kateqoriya seçin --</option>
+                            </select>
+                            <span asp-validation-for="CategoryId"></span>
+                            <br>
+                            <label>Color</label>
+                            <select asp-for="ColorId" asp-items="Model.ListColor" class="form-control" style="border:1px solid #ccc;">
+                                <option value="">-- Rəng seçin --</option>
+                            </select>
+                            <span asp-validation-for="ColorId"></span>
+
+                            <label class="font-weight-bold">Sizes</label>
+                            <div class="form-group">
+                                <table class="table table-bordered text-center" style="width:auto;">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            @foreach (var size in Model.ListSize)
+                                            {
+                                                <th class="px-3 py-2">@size.Text</th>
+                                            }
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var size in Model.ListSize)
+                                            {
+                                                <td class="align-middle">
+                                                    <input type="checkbox"
+                                                           name="SelectedSizes"
+                                                           value="@size.Value"
+                                                           class="form-check-input mx-auto d-block" />
+                                                </td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <span asp-validation-for="SelectedSizes" class="text-danger"></span>
+                            <br>
+                            <label>Count</label>
+                            <input asp-for="Price" class="form-control" style="border:1px solid #ccc;" placeholder="Quantity">
+                            <span asp-validation-for="Quantity"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <a asp-controller="Product" asp-action="Index" class="btn btn-light">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

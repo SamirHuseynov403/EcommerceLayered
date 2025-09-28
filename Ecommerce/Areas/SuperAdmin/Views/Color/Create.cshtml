@@ -1,0 +1,33 @@
+﻿@using Ecommerce.BLL.DTOs.Color
+@model CreateColorDto
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Add Color</h4>
+                    <form method="post" class="forms-sample">
+
+                        <!-- Color Name -->
+                        <div class="form-group">
+                            <label asp-for="Name">Color Name</label>
+                            <input asp-for="Name" class="form-control" placeholder="e.g. Red" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <!-- Color Code -->
+                        <div class="form-group">
+                            <label asp-for="Code">Color Code</label>
+                            <input asp-for="Code" type="color" class="form-control form-control-color" />
+                            <span asp-validation-for="Code" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <a asp-controller="Color" asp-action="Index" class="btn btn-light">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
