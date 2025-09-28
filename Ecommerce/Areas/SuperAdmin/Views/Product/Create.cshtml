@@ -20,16 +20,12 @@
                             <span asp-validation-for="ImageFile"></span>
                             <br>
                             <label>Price</label>
-                            <input asp-for="Price" class="form-control" style="border:1px solid #ccc;" placeholder="Price">
+                            <input asp-for="Price" type="number" class="form-control" style="border:1px solid #ccc;" placeholder="Price">
                             <span asp-validation-for="Price"></span>
                             <br>
                             <input asp-for="Description" class="form-control" style="border:1px solid #ccc;" placeholder="Description">
                             <span asp-validation-for="Description"></span>
                             <br>
-                            @* <label>Discount Percent</label>
-                            <input asp-for="DiscountPercent" class="form-control" style="border:1px solid #ccc;" placeholder="DiscountPercent">
-                            <span asp-validation-for="DiscountPercent"></span>
-                            <br> *@
                             <label>Brand</label>
                             <select asp-for="BrandId" asp-items="Model.ListBrand" class="form-control" style="border:1px solid #ccc;">
                                 <option value="">-- Brand seçin --</option>
@@ -77,7 +73,7 @@
                             <span asp-validation-for="SelectedSizes" class="text-danger"></span>
                             <br>
                             <label>Count</label>
-                            <input asp-for="Price" class="form-control" style="border:1px solid #ccc;" placeholder="Quantity">
+                            <input asp-for="Quantity" class="form-control" style="border:1px solid #ccc;" placeholder="Quantity">
                             <span asp-validation-for="Quantity"></span>
                         </div>
                         <button type="submit" class="btn btn-primary mr-2">Submit</button>

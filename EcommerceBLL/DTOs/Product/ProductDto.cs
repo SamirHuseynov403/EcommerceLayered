@@ -1,4 +1,8 @@
-﻿using Ecommerce.BLL.DTOs.OrderItem;
+﻿using Ecommerce.BLL.DTOs.Brand;
+using Ecommerce.BLL.DTOs.Category;
+using Ecommerce.BLL.DTOs.Color;
+using Ecommerce.BLL.DTOs.OrderItem;
+using Ecommerce.BLL.DTOs.ProductVariant;
 using Microsoft.AspNetCore.Http;
 
 namespace Ecommerce.BLL.DTOs.Product
@@ -13,8 +17,13 @@ namespace Ecommerce.BLL.DTOs.Product
 
         public string? ImageUrl { get; set; }
         public int CategoryId { get; set; }
+        public CategoryDto Category { get; set; } = null!;
 
         public int? BrandId { get; set; }
+        public BrandDto? Brand { get; set; }
+
+        public int? ProductVariantId { get; set; }
+        public List<ProductVariantDto> ProductVariants { get; set; } = [];
 
         public List<OrderItemDto> OrderItems { get; set; } = [];
     }

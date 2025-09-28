@@ -41,4 +41,8 @@
     <None Include="wwwroot\Admin\vendors\.DS_Store" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Admin\images\product\" />
+  </ItemGroup>
+
 </Project>

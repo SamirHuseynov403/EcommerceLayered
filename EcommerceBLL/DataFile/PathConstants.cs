@@ -1,9 +1,9 @@
-﻿namespace OganiMasterMVC.Areas.Admin.Data
+﻿namespace Ecommerce.BLL.DataFile
 {
     public class PathConstants
     {
-        public static string ProductImagePath = "";
-        public static string CategoryImagePath = "";
+        public static string ProductImagePath = "Admin/products";
+        public static string CategoryImagePath = "categories";
     }
 
 

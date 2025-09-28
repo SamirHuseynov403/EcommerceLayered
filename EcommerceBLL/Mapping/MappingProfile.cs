@@ -55,9 +55,14 @@ namespace Ecommerce.BLL.Mapping
             CreateMap<OrderItem, CreateOrderItemDto>().ReverseMap();
             CreateMap<OrderItem, UpdateOrderItemDto>().ReverseMap();
 
-            CreateMap<Product, ProductDto>().ReverseMap();
+            CreateMap<Product, ProductDto>()
+             .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Brand))
+             .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))
+             .ForMember(dest => dest.ProductVariants, opt => opt.MapFrom(src => src.ProductVariants));
             CreateMap<Product, CreateProductDto>().ReverseMap();
             CreateMap<Product, UpdateProductDto>().ReverseMap();
+
+            CreateMap<ProductDto, UpdateProductDto>().ReverseMap();
 
             CreateMap<ProductImage, ProductImageDto>().ReverseMap();
             CreateMap<ProductImage, CreateProductImageDto>().ReverseMap();
@@ -66,6 +71,9 @@ namespace Ecommerce.BLL.Mapping
             CreateMap<ProductVariant, ProductVariantDto>().ReverseMap();
             CreateMap<ProductVariant, CreateProductVariantDto>().ReverseMap();
             CreateMap<ProductVariant, UpdateProductVariantDto>().ReverseMap();
+
+            CreateMap<ProductVariantDto, UpdateProductVariantDto>().ReverseMap();
+
 
             CreateMap<Social, SocialDto>().ReverseMap();
             CreateMap<Social, CreateSocialDto>().ReverseMap();
@@ -86,6 +94,7 @@ namespace Ecommerce.BLL.Mapping
             CreateMap<Size, SizeDto>().ReverseMap();
             CreateMap<Size, CreateSizeDto>().ReverseMap();
             CreateMap<Size, UpdateSizeDto>().ReverseMap();
+
         }
     }
 }

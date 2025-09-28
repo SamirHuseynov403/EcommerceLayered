@@ -5,7 +5,8 @@ namespace Ecommerce.BLL.Services
 {
     public interface IProductService : ICrudService<Product, ProductDto, CreateProductDto, UpdateProductDto> 
     {
-        Task<bool> AddProductAsync(CreateProductDto model);
+        Task<int> AddProductAsync(CreateProductDto model);
+        Task<bool> UpdateProductAsync(UpdateProductDto model);
     }
 }
 

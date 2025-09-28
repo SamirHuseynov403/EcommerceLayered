@@ -8,6 +8,6 @@ namespace Ecommerce.BLL.DTOs.Category
         public int? ParentId { get; set; }
 
         public List<CategoryDto> SubCategories { get; set; } = [];
-        public List<CategoryDto> Products { get; set; } = [];
+        //public List<CategoryDto> Products { get; set; } = [];
     }
 }
