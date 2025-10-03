@@ -1998,7 +1998,10 @@
           "Microsoft.AspNetCore.Http.Features": "5.0.17"
         },
         "runtime": {
-          "Ecommerce.BLL.dll": {}
+          "Ecommerce.BLL.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "Ecommerce.DAL/1.0.0": {
@@ -2008,7 +2011,10 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.20"
         },
         "runtime": {
-          "Ecommerce.DAL.dll": {}
+          "Ecommerce.DAL.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

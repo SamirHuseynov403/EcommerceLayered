@@ -12,6 +12,7 @@ using Ecommerce.BLL.DTOs.OrderItem;
 using Ecommerce.BLL.DTOs.Product;
 using Ecommerce.BLL.DTOs.ProductImage;
 using Ecommerce.BLL.DTOs.ProductVariant;
+using Ecommerce.BLL.DTOs.SeasonEssentials;
 using Ecommerce.BLL.DTOs.Social;
 using Ecommerce.BLL.DTOs.WachedProduct;
 using Ecommerce.BLL.DTOs.WishList;
@@ -58,7 +59,9 @@ namespace Ecommerce.BLL.Mapping
             CreateMap<Product, ProductDto>()
              .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Brand))
              .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))
-             .ForMember(dest => dest.ProductVariants, opt => opt.MapFrom(src => src.ProductVariants));
+             .ForMember(dest => dest.ProductVariants, opt => opt.MapFrom(src => src.ProductVariants))
+             .ForMember(dest => dest.ProductImages,
+               opt => opt.MapFrom(src => src.ProductImages));
             CreateMap<Product, CreateProductDto>().ReverseMap();
             CreateMap<Product, UpdateProductDto>().ReverseMap();
 
@@ -94,6 +97,11 @@ namespace Ecommerce.BLL.Mapping
             CreateMap<Size, SizeDto>().ReverseMap();
             CreateMap<Size, CreateSizeDto>().ReverseMap();
             CreateMap<Size, UpdateSizeDto>().ReverseMap();
+
+            CreateMap<SeasonEssential, SeasonEssentialDto>().ReverseMap();
+            CreateMap<SeasonEssential, CreateSeasonEssentialDto>().ReverseMap();
+            CreateMap<SeasonEssential, UpdateSeasonEssentialDto>().ReverseMap();
+
 
         }
     }

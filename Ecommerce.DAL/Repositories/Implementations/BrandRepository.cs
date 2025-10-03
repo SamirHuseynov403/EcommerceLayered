@@ -10,5 +10,5 @@ namespace Ecommerce.DAL.Repositories.Migrations
         {
         }
     }
-
+    
 }

@@ -8,6 +8,7 @@ namespace Ecommerce.DAL.Entities
         public int ProductId { get; set; }
         public Product Product { get; set; } = null!;
 
+        public int ColorId { get; set; }
         public int? ProductVariantId { get; set; }
         public ProductVariant? ProductVariant { get; set; }
     }

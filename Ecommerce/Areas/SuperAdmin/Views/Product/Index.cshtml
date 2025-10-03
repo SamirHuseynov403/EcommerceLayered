@@ -34,6 +34,9 @@
                                     #
                                 </th>
                                 <th class="text-center align-middle" style="border:1px solid #ccc;">
+                                    Product Code
+                                </th>
+                                <th class="text-center align-middle" style="border:1px solid #ccc;">
                                     Product
                                 </th>
                                 <th class="text-center align-middle" style="border:1px solid #ccc;">
@@ -47,6 +50,9 @@
                                 </th>
                                 <th class="text-center align-middle" style="border:1px solid #ccc;">
                                     Description
+                                </th>
+                                <th class="text-center align-middle" style="border:1px solid #ccc;">
+                                    Gender
                                 </th>
                                 <th class="text-center align-middle" style="border:1px solid #ccc;">
                                     Brand
@@ -73,10 +79,13 @@
                                         @count
                                     </td>
                                     <td class="text-center align-middle" style="border:1px solid #ccc;">
+                                        @item.ProductCode
+                                    </td>
+                                    <td class="text-center align-middle" style="border:1px solid #ccc;">
                                         @item.Name
                                     </td>
                                     <td class="text-center align-middle" style="border:1px solid #ccc;">
-                                        @item.ProductVariants.Sum(v => v.Quantity)
+                                        @item.ProductVariants?.Sum(v => v.Quantity)
                                     </td>
                                     <td class="text-center align-middle" style="border:1px solid #ccc;">
                                         <img src="~/Admin/products/@item.ImageUrl" alt="@item.Name"
@@ -91,20 +100,25 @@
                                         @item.Description
                                     </td>
                                     <td class="text-center align-middle" style="border:1px solid #ccc;">
-                                        @item.Brand!.Name
+                                        @item.Gender
+                                    </td>
+                                    <td class="text-center align-middle" style="border:1px solid #ccc;">
+                                        @item.Brand?.Name
                                     </td>
                                     <td class="text-center align-middle" style="border:1px solid #ccc;">
                                         @item.Category.Name
                                     </td>
-                                    
 
                                     <td style="border:1px solid #ccc;">
-                                        <a class="btn btn-warning" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                        <a class="btn btn-warning" asp-controller="DetailsProduct" asp-action="Details" asp-route-id="@item.Id">Details</a>
                                         <a class="btn btn-warning" asp-controller="Product" asp-action="Update" asp-route-id="@item.Id">Update</a>
 
-                                        <form asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id" method="post" style="display:inline">
+                                        <form asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id"
+                                              method="post" style="display:inline"
+                                              onsubmit="return confirm('Məhsul silinməsini təsdiq edin.')">
                                             <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
+
 
                                     </td>
 

@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.MVC.Areas.SuperAdmin.Controllers
 {
+    [Area("SuperAdmin")]
     public class ProductController : AdminController
     {
         private readonly IProductService _productService;
@@ -36,8 +37,8 @@ namespace Ecommerce.MVC.Areas.SuperAdmin.Controllers
             var listProducts = await _productService.GetAllAsync(
             predicate: p => !p.IsDeleted,
             include: q => q
-        .Include(p => p.Category!)
-        .Include(p => p.Brand!)
+        .Include(p => p.Category)
+        .Include(p => p.Brand)
         .Include(p => p.ProductVariants.Where(v => !v.IsDeleted))
             );
 
@@ -77,8 +78,6 @@ namespace Ecommerce.MVC.Areas.SuperAdmin.Controllers
             var model = new ProductViewModel
             {
                 ListCategory = listCategory,
-                ListColor = listColor,
-                ListSize = listSize,
                 ListBrand = listBrand
             };
 
@@ -93,24 +92,12 @@ namespace Ecommerce.MVC.Areas.SuperAdmin.Controllers
                 return RedirectToAction("Index");
             }
 
-            if (model.SelectedSizes == null || !model.SelectedSizes.Any())
-            {
-                ModelState.AddModelError("", "Ən azı bir ölçü seçməlisiniz.");
-                return View(model);
-            }
-
-            if (model.Quantity <= 0)
-            {
-                ModelState.AddModelError("Quantity", "Miqdar 0-dan böyük olmalıdır.");
-                return View(model);
-            }
-
             var dto = new CreateProductDto
             {
+                ProductCode = model.ProductCode,
                 Name = model.Name,
                 Description = model.Description!,
                 Price = model.Price,
-                Stock = model.Quantity,
                 CategoryId = model.CategoryId,
                 BrandId = model.BrandId,
                 ImageFile = model.ImageFile
@@ -121,17 +108,6 @@ namespace Ecommerce.MVC.Areas.SuperAdmin.Controllers
             {
                 ModelState.AddModelError("", "Xəta baş verdi");
                 return View(model);
-            }
-            for (var i = 0; i < model.SelectedSizes.Count; i++)
-            {
-                var prvariant = new CreateProductVariantDto
-                {
-                    ColorId = model.ColorId,
-                    ProductId = isSucceeded,
-                    SizeId = model.SelectedSizes[i],
-                    Quantity = model.Quantity
-                };
-                await _productVariantService.CreateAsync(prvariant);
             }
 
             return RedirectToAction("Index");
@@ -144,17 +120,20 @@ namespace Ecommerce.MVC.Areas.SuperAdmin.Controllers
             var listProdduct = await _productService.GetByIdAsync(id);
             var listProductVAriant = await _productVariantService.GetByIdAsync(id);
 
-            if (listProdduct == null || listProductVAriant == null) { return View("Error"); }
+            if (listProdduct == null) { return RedirectToAction("Index"); }
 
             listProdduct.IsDeleted = true;
-            listProductVAriant.IsDeleted = true;
 
             var dtoProdyct = _mapper.Map<UpdateProductDto>(listProdduct);
-            var dtoVariant = _mapper.Map<UpdateProductVariantDto>(listProductVAriant);
 
             await _productService.UpdateAsync(id, dtoProdyct);
-            await _productVariantService.UpdateAsync(id, dtoVariant);
 
+            if (listProductVAriant != null)
+            {
+                listProductVAriant.IsDeleted = true;
+                var dtoVariant = _mapper.Map<UpdateProductVariantDto>(listProductVAriant);
+                await _productVariantService.UpdateAsync(id, dtoVariant);
+            }
             return RedirectToAction("Index");
         }
 
@@ -265,5 +244,16 @@ namespace Ecommerce.MVC.Areas.SuperAdmin.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> CheckCode(string code)
+        {
+            if (string.IsNullOrWhiteSpace(code))
+                return Json(new { exists = false });
+
+            // ProductCode string-dir, birbaşa yoxlaya bilərik
+            var product = await _productService.GetAsync(p => p.ProductCode == code && !p.IsDeleted);
+
+            return Json(new { exists = product != null });
+        }
     }
 }

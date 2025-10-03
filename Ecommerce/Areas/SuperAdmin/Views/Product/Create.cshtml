@@ -11,6 +11,10 @@
                     <h4 class="card-title">Add Product</h4>
                     <form method="post" class="forms-sample" enctype="multipart/form-data">
                         <div class="form-group">
+                            <label>Code</label>
+                            <input asp-for="ProductCode" class="form-control" id="CodeInput" placeholder="product code" />
+                            <span id="CodeValidation" class="text-danger"></span>
+                            <br>
                             <label>Name</label>
                             <input asp-for="Name" class="form-control" style="border:1px solid #ccc;" placeholder="product name">
                             <span asp-validation-for="Name"></span>
@@ -20,11 +24,18 @@
                             <span asp-validation-for="ImageFile"></span>
                             <br>
                             <label>Price</label>
-                            <input asp-for="Price" type="number" class="form-control" style="border:1px solid #ccc;" placeholder="Price">
+                            <input asp-for="Price" type="number" step="0.01" class="form-control" style="border:1px solid #ccc;" placeholder="Price">
                             <span asp-validation-for="Price"></span>
                             <br>
+
                             <input asp-for="Description" class="form-control" style="border:1px solid #ccc;" placeholder="Description">
                             <span asp-validation-for="Description"></span>
+
+                            <label>Gender</label>
+                            <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" class="form-control" style="border:1px solid #ccc;">
+                                <option value="">-- Cins seçin --</option>
+                            </select>
+                            <span asp-validation-for="Gender"></span>
                             <br>
                             <label>Brand</label>
                             <select asp-for="BrandId" asp-items="Model.ListBrand" class="form-control" style="border:1px solid #ccc;">
@@ -38,43 +49,7 @@
                             </select>
                             <span asp-validation-for="CategoryId"></span>
                             <br>
-                            <label>Color</label>
-                            <select asp-for="ColorId" asp-items="Model.ListColor" class="form-control" style="border:1px solid #ccc;">
-                                <option value="">-- Rəng seçin --</option>
-                            </select>
-                            <span asp-validation-for="ColorId"></span>
-
-                            <label class="font-weight-bold">Sizes</label>
-                            <div class="form-group">
-                                <table class="table table-bordered text-center" style="width:auto;">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            @foreach (var size in Model.ListSize)
-                                            {
-                                                <th class="px-3 py-2">@size.Text</th>
-                                            }
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            @foreach (var size in Model.ListSize)
-                                            {
-                                                <td class="align-middle">
-                                                    <input type="checkbox"
-                                                           name="SelectedSizes"
-                                                           value="@size.Value"
-                                                           class="form-check-input mx-auto d-block" />
-                                                </td>
-                                            }
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <span asp-validation-for="SelectedSizes" class="text-danger"></span>
-                            <br>
-                            <label>Count</label>
-                            <input asp-for="Quantity" class="form-control" style="border:1px solid #ccc;" placeholder="Quantity">
-                            <span asp-validation-for="Quantity"></span>
+                            
                         </div>
                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
                         <a asp-controller="Product" asp-action="Index" class="btn btn-light">Cancel</a>
@@ -85,3 +60,25 @@
     </div>
 
 </div>
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        $("#CodeInput").on("keyup", function () {
+            var code = $(this).val();
+
+            if (code.length > 0) {
+                $.getJSON('@Url.Action("CheckCode", "Product", new { area = "SuperAdmin" })',
+                    { code: code },
+                    function (data) {
+                        if (data.exists) {
+                            $("#CodeValidation").text("Bu məhsul artıq mövcuddur!");
+                        } else {
+                            $("#CodeValidation").text("");
+                        }
+                    });
+            }   
+        });
+    </script>
+}
+
+

@@ -1,32 +1,49 @@
-using Ecommerce.Models;
+﻿using AutoMapper;
+using Ecommerce.BLL.Services;
+using Ecommerce.MVC.Areas.SuperAdmin.Models.Product;
+using Ecommerce.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IProductService _productService;
+        private readonly ISeasonEssentialService _seasonEssentialService;
+        private readonly IMapper _mapper;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IProductService productService, ISeasonEssentialService seasonEssentialService, IMapper mapper)
         {
-            _logger = logger;
+            _productService = productService;
+            _seasonEssentialService = seasonEssentialService;
+            _mapper = mapper;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var listProductsSeason = await _productService.GetAllAsync(
+    predicate: p => !p.IsDeleted
+        && p.SeasonEssentials.Any(se => !se.IsDeleted),
+    include: q => q
+        .Include(p => p.Category)
+        .Include(p => p.Brand)
+        .Include(p => p.ProductImages.Where(img => !img.IsDeleted)) // 🔹 burda şəkillər gəlir
+        .Include(p => p.ProductVariants.Where(v => !v.IsDeleted))
+            .ThenInclude(v => v.Color)
+        .Include(p => p.ProductVariants.Where(v => !v.IsDeleted))
+            .ThenInclude(v => v.Size)
+);
+
+
+
+
+            var model = new HomeViewModel
+            {
+                Products = listProductsSeason.ToList()
+            };
+            return View(model);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

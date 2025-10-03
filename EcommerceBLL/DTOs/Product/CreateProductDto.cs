@@ -7,6 +7,7 @@ namespace Ecommerce.BLL.DTOs.Product
 {
     public class CreateProductDto
     {
+        public required string ProductCode { get; set; }
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
         public decimal Price { get; set; }

@@ -8,3 +8,4 @@ namespace Ecommerce.DAL.Repositories.Interfaces
 
     }
 }
+

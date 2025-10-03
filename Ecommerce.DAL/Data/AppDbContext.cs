@@ -26,5 +26,6 @@ namespace Ecommerce.DAL.Data
         public DbSet<WachedProduct> WachedProduct { get; set; }
         public DbSet<Size> Sizes { get; set; }
         public DbSet<Color> Colors { get; set; }
+        public DbSet<SeasonEssential> SeasonEssentials { get; set; }
     }
 }

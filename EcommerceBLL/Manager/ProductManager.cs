@@ -3,7 +3,6 @@ using Ecommerce.BLL.DTOs.Product;
 using Ecommerce.BLL.Services;
 using Ecommerce.DAL.Entities;
 using Ecommerce.DAL.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using Ecommerce.BLL.DataFile;
 
 namespace Ecommerce.BLL.Manager
@@ -19,12 +18,15 @@ namespace Ecommerce.BLL.Manager
             if (!model.ImageFile!.IsImage()) return 0;
             if (!model.ImageFile!.IsAllowedSize(1)) return 0;
             if (model.Price<0) return 0;
-            
+            var productcheck = await Repository.GetAsync(p => p.ProductCode == model.ProductCode);
+            if (productcheck != null) return 0;
+
             string extension = Path.GetExtension(model.ImageFile!.FileName).ToLower();
             var unicalName = await model.ImageFile.GenerateFile(PathConstants.ProductImagePath, extension);
 
             var product = new Product
             {
+                ProductCode = model.ProductCode,
                 Name = model.Name,
                 Description = model.Description,
                 Price = model.Price,
@@ -49,7 +51,6 @@ namespace Ecommerce.BLL.Manager
             product.BrandId = model.BrandId;
             product.CategoryId = model.CategoryId;
 
-            // Əgər yeni şəkil seçilibsə
             if (model.ImageFile != null)
             {
                 if (!model.ImageFile.IsImage()) return false;
@@ -70,6 +71,5 @@ namespace Ecommerce.BLL.Manager
             await Repository.UpdateAsync(product);
             return true;
         }
-
     }
 }

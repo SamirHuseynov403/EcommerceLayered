@@ -3,7 +3,10 @@ using Ecommerce.DAL.Entities;
 
 namespace Ecommerce.BLL.Services
 {
-    public interface IProductVariantService : ICrudService<ProductVariant, ProductVariantDto, CreateProductVariantDto, UpdateProductVariantDto> { }
+    public interface IProductVariantService : ICrudService<ProductVariant, ProductVariantDto, CreateProductVariantDto, UpdateProductVariantDto>
+    {
+        Task<ProductVariantDto> CreateAsync(CreateProductVariantDto model);
+    }
 }
 
 

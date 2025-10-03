@@ -2,6 +2,7 @@
 using Ecommerce.BLL.Mapping;
 using Ecommerce.BLL.Services;
 using Ecommerce.DAL.Data;
+using Ecommerce.DAL.Entities;
 using Ecommerce.DAL.Repositories.Interfaces;
 using Ecommerce.DAL.Repositories.Migrations;
 using Microsoft.EntityFrameworkCore;
@@ -48,6 +49,7 @@ namespace Ecommerce.BLL
             services.AddScoped<IColorRepository, ColorRepository>();
 
             services.AddScoped<ISizeRepository, SizeRepository>();
+            services.AddScoped<ISeasonEssentialRepository, SeasonEssentialRepository>();
 
             return services;
         }
@@ -93,6 +95,8 @@ namespace Ecommerce.BLL
             services.AddScoped<IColorService, ColorManager>();
 
             services.AddScoped<ISizeService, SizeManager>();
+
+            services.AddScoped<ISeasonEssentialService, SeasonEssentialManager>();
 
             return services;
         }
